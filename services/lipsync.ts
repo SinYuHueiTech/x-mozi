@@ -31,6 +31,12 @@ export interface LipsyncFrameEvent {
   progress: number;
 }
 
+export interface LipsyncAudioChunkEvent {
+  type: 'audio_chunk';
+  data: string;  // base64 encoded audio data
+  index: number;
+}
+
 export interface LipsyncCompleteEvent {
   type: 'complete';
   total_frames: number;
@@ -43,12 +49,13 @@ export interface LipsyncErrorEvent {
   message: string;
 }
 
-export type LipsyncEvent = 
-  | LipsyncStartEvent 
-  | LipsyncStatusEvent 
-  | LipsyncInfoEvent 
-  | LipsyncFrameEvent 
-  | LipsyncCompleteEvent 
+export type LipsyncEvent =
+  | LipsyncStartEvent
+  | LipsyncStatusEvent
+  | LipsyncInfoEvent
+  | LipsyncFrameEvent
+  | LipsyncAudioChunkEvent
+  | LipsyncCompleteEvent
   | LipsyncErrorEvent;
 
 /** 上传响应 */
@@ -153,6 +160,7 @@ export interface GenerateCallbacks {
   onStatus?: (event: LipsyncStatusEvent) => void;
   onInfo?: (event: LipsyncInfoEvent) => void;
   onFrame?: (event: LipsyncFrameEvent) => void;
+  onAudioChunk?: (event: LipsyncAudioChunkEvent) => void;
   onComplete?: (event: LipsyncCompleteEvent) => void;
   onError?: (event: LipsyncErrorEvent) => void;
 }
@@ -229,6 +237,9 @@ export async function generateFrames(
                   break;
                 case 'frame':
                   callbacks.onFrame?.(event);
+                  break;
+                case 'audio_chunk':
+                  callbacks.onAudioChunk?.(event);
                   break;
                 case 'complete':
                   callbacks.onComplete?.(event);

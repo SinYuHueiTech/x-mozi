@@ -66,20 +66,27 @@ export function AvatarVideo() {
     }
   }, [effectiveAction, showCanvas]);
 
-  // 应用启动或 avatar 切换时，自动上传人脸文件（视频）用于对口型
+  // 应用启动或 avatar 切换时，获取人脸文件 ID 用于对口型
   useEffect(() => {
     if (lipsyncEnabled && currentAvatarId && !faceFileId) {
-      console.log('上传 avatar 人脸视频:', currentAvatar.faceImage);
-      uploadFaceImage(currentAvatar.faceImage)
-        .then(fileId => {
-          console.log('人脸视频上传成功:', fileId);
-          setFaceFileId(fileId);
-        })
-        .catch(err => {
-          console.error('上传人脸视频失败:', err);
-        });
+      if (currentAvatar.faceFileId) {
+        // 直接使用预配置的服务器文件 ID，跳过上传
+        console.log('使用预配置人脸文件 ID:', currentAvatar.faceFileId);
+        setFaceFileId(currentAvatar.faceFileId);
+      } else {
+        // 上传人脸视频并获取 ID
+        console.log('上传 avatar 人脸视频:', currentAvatar.faceImage);
+        uploadFaceImage(currentAvatar.faceImage)
+          .then(fileId => {
+            console.log('人脸视频上传成功:', fileId);
+            setFaceFileId(fileId);
+          })
+          .catch(err => {
+            console.error('上传人脸视频失败:', err);
+          });
+      }
     }
-  }, [currentAvatarId, lipsyncEnabled, faceFileId, currentAvatar.faceImage, setFaceFileId]);
+  }, [currentAvatarId, lipsyncEnabled, faceFileId, currentAvatar.faceImage, currentAvatar.faceFileId, setFaceFileId]);
 
   // 判断某个视频是否应该显示
   const isVideoVisible = (videoAction: string) => {

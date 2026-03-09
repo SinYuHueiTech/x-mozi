@@ -82,8 +82,8 @@ export default function Home() {
   // 暴露唤醒控制到 window（控制台使用）
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const win = window as Window & { 
-        startWakeWord?: () => void; 
+      const win = window as Window & {
+        startWakeWord?: () => void;
         stopWakeWord?: () => void;
         isWakeWordEnabled?: () => boolean;
         startCameraWake?: () => void;
@@ -91,6 +91,16 @@ export default function Home() {
         isCameraWakeEnabled?: () => boolean;
         wake?: () => void;
         unwake?: () => void;
+        chat?: (text: string) => void;
+      };
+
+      // 文字发送指令（调试用）
+      win.chat = (text: string) => {
+        if (!text?.trim()) {
+          console.warn('用法: chat("你好墨子")');
+          return;
+        }
+        handleTextInput(text);
       };
 
       // 语音唤醒控制
@@ -127,12 +137,15 @@ export default function Home() {
         console.log('🛑 已关闭所有唤醒');
       };
     }
-  }, [startListening, stopListening, isWakeListening, startDetecting, stopDetecting, isCameraDetecting]);
+  }, [startListening, stopListening, isWakeListening, startDetecting, stopDetecting, isCameraDetecting, handleTextInput]);
 
   // Log console usage hint on mount
   useEffect(() => {
     console.log(`
-🚀 唤醒命令 (推荐):
+💬 发送文字 (调试):
+  chat("你好墨子")        // 直接发送文字给 AI
+
+🚀 唤醒命令:
   wake()                 // 同时开启语音+摄像头唤醒
   unwake()               // 关闭所有唤醒
 

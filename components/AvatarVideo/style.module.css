@@ -14,8 +14,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  /* 平滑切换过渡效果 */
-  transition: opacity 0.1s ease-out;
 }
 
 .canvas {
@@ -26,8 +24,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  /* 平滑切换过渡效果 */
-  transition: opacity 0.1s ease-out;
 }
 
 .hidden {

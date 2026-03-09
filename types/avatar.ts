@@ -3,8 +3,9 @@ export type AvatarAction = 'idle' | 'talk' | 'dance' | 'think';
 export interface AvatarModel {
   id: string;
   name: string;
-  thumbnail: string;   // 预览缩略图：/avatars/avatar-${id}-preview.png
-  faceImage: string;   // 对口型全身照：/avatars/avatar-${id}.png
+  thumbnail: string;    // 预览缩略图：/avatars/avatar-${id}-preview.png
+  faceImage: string;    // 对口型视频源（用于上传到 Wav2Lip 服务器）
+  faceFileId?: string;  // 服务器已有的人脸文件 ID，填写后跳过上传直接使用
   videos: {
     idle: string;
     talk: string;
@@ -39,7 +40,10 @@ function createAvatar(id: string, name: string): AvatarModel {
  */
 export const AVATAR_LIST: AvatarModel[] = [
   // createAvatar('1', '形象 1'),
-  createAvatar('2', '形象 2'),
+  {
+    ...createAvatar('2', '形象 2'),
+    faceFileId: '3fb12802847f4647b7e6f9af26726185.mp4',  // 填服务器返回的文件 ID
+  }
   // createAvatar('3', '形象 3'),
   // createAvatar('4', '形象 4'),
   // createAvatar('5', '形象 5'),

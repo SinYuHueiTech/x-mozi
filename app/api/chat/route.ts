@@ -1,4 +1,4 @@
-import { CozeAPI, ChatEventType, RoleType, COZE_COM_BASE_URL } from '@coze/api';
+import { CozeAPI, ChatEventType, RoleType, COZE_CN_BASE_URL } from '@coze/api';
 
 export const runtime = 'nodejs';
 
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     // 初始化 Coze Client
     const client = new CozeAPI({
       token: apiKey,
-      baseURL: COZE_COM_BASE_URL,
+      baseURL: COZE_CN_BASE_URL,
       allowPersonalAccessTokenInBrowser: false,
     });
 

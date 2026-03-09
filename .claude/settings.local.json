@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit)",
+      "Bash(npx tsc:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Read(//tmp/**)",
+      "Bash(mkdir -p /tmp/til-draft/posts /tmp/til-draft/typescript)",
+      "Bash(mkdir -p ~/til-draft/posts ~/til-draft/typescript)",
+      "Read(//c/Users/Rayner/**)",
+      "Bash(echo $HOME)",
+      "Bash(cp /c/Users/Rayner/til-draft/posts/audiocontext-sync-gate.md /c/Users/Rayner/Project/til/posts/)",
+      "Bash(cp /c/Users/Rayner/til-draft/typescript/audiocontext-sync-gate.ts /c/Users/Rayner/Project/til/typescript/)"
+    ]
+  }
+}
